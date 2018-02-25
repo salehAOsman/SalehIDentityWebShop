@@ -54,5 +54,7 @@ namespace SalehIdentityWebShop.Models
         {
             return new ApplicationDbContext();
         }
+        //project created by self this DbSet then we have here tow reference to db one already from identity  and another from Wizard when we create new view for usermanger   
+       // public System.Data.Entity.DbSet<SalehIdentityWebShop.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }
