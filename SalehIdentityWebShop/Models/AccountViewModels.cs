@@ -55,7 +55,7 @@ namespace SalehIdentityWebShop.Models
         //public string Email { get; set; }
 
         [Required]
-        [Display(Name = "Use Name")]
+        [Display(Name = "User Name")]
         public string Username { get; set; }
         //check if we fix intellesence with in Login username in AcountController then 
         //we go to registerViewModel to add it there 
@@ -75,7 +75,7 @@ namespace SalehIdentityWebShop.Models
     {
         //we add user name here 
         [Required]
-        [Display(Name = "Use Name")]
+        [Display(Name = "User Name")]
         public string Username { get; set; }
         
         //but we need to change in view login to be as user name
@@ -100,7 +100,7 @@ namespace SalehIdentityWebShop.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-        public string Adress { get; set; }
+        public string Address { get; set; }
 
         //end of new properties then PM>Update-DataBase
         //go to add in controller and view as register to have info from out as input properties to not have exceptions  for them 
