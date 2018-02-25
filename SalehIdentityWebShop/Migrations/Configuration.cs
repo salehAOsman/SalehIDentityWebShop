@@ -14,8 +14,7 @@ namespace SalehIdentityWebShop.Migrations
         {
             AutomaticMigrationsEnabled = true;
         }
-        //here we change 'contect' as default  to 'db' in seed method  like this 
-        //protected override void Seed(SalehIdentityWebShop.Models.ApplicationDbContext context)
+
         protected override void Seed(SalehIdentityWebShop.Models.ApplicationDbContext db)
         {
             //  This method will be called after migrating to the latest version.
@@ -30,45 +29,37 @@ namespace SalehIdentityWebShop.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-            //Saleh *2 first step for full project Identity 
-
-            ApplicationUser myAdmin;//we need object refer to users class
+            ApplicationUser myAdmin;
             ApplicationUser myFoo;
-            //I need to create new roleStore  to create new role manager
+            //I need to create new roleStore to create roleManager
             var roleStore = new RoleStore<IdentityRole>(db);
-            //I need to create new roleManager  to create new userManager
+            //I need to create new roleManager to create userManager
             var roleManager = new RoleManager<IdentityRole>(roleStore);
 
-            // //now we will create a roles not users 
             var userStore = new UserStore<ApplicationUser>(db);
             var userManager = new UserManager<ApplicationUser>(userStore);
-
-            if (roleManager.FindByName("Guru") == null)//check if it is first time then create new user
+            //now we create a roles not users 
+            if (roleManager.FindByName("Guru") == null)// check if it is first time then create new user
             {
                 roleManager.Create(new IdentityRole("Guru"));// my role for adminstration
             }
-            if (roleManager.FindByName("Common") == null)//check if it is first time then create new user
+            if (roleManager.FindByName("Common") == null)
             {
                 roleManager.Create(new IdentityRole("Common"));// my role for a normal User
             }
-
-            //now we will create a users 
-
+            //now we create a users 
             if (userManager.FindByName("Admin") == null)
             {
                 //we need new object from ApplicationUser to creat new user 
                 myAdmin = new ApplicationUser()
                 {
-                    
                     UserName = "Admin",
                     Email = "admin@admin.se",
-                    //after we add new properties to users then we need to add here this requierd properties 
                     Age = 99,
                     FirstName = "Admin",
                     LastName = "Administration",
                     Adress = "Admi-role 1"
                 };
-               
                 userManager.Create(myAdmin, "!23Qwe");      //we add now to Database
             }
             //another user
@@ -80,7 +71,6 @@ namespace SalehIdentityWebShop.Migrations
                 {
                     UserName = "Foo",
                     Email = "foo@foo.se",
-                    //after we add new properties to users then we need to add here this requierd properties 
                     Age = 0,
                     FirstName = "Foo",
                     LastName = "Foo",
@@ -88,7 +78,6 @@ namespace SalehIdentityWebShop.Migrations
                 };
                 userManager.Create(myFoo, "!23Qwe");      //we add now to Database
             }
-
             //here save both to database 
             db.SaveChanges();
             //we need to assign user to object
@@ -97,7 +86,7 @@ namespace SalehIdentityWebShop.Migrations
             //we will assign role as "Guru" to "myadmin" user 
             userManager.AddToRole(myAdmin.Id, "Guru");
             userManager.AddToRole(myFoo.Id, "Common");
-            //to see data base go PM>Update-Database
+            
         }
     }
 }
