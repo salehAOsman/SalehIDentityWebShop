@@ -48,10 +48,19 @@ namespace SalehIdentityWebShop.Models
 
     public class LoginViewModel
     {
+        //replace Email by Usename to fix login by name
+        //[Required]
+        //[Display(Name = "Email")]
+        //[EmailAddress]
+        //public string Email { get; set; }
+
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "Use Name")]
+        public string Username { get; set; }
+        //check if we fix intellesence with in Login username in AcountController then 
+        //we go to registerViewModel to add it there 
+        //but we need to change in view login to be as user name
+
 
         [Required]
         [DataType(DataType.Password)]
@@ -64,6 +73,12 @@ namespace SalehIdentityWebShop.Models
 
     public class RegisterViewModel
     {
+        //we add user name here 
+        [Required]
+        [Display(Name = "Use Name")]
+        public string Username { get; set; }
+        //but we need to change in view login to be as user name
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
