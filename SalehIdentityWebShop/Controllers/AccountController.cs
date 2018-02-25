@@ -155,8 +155,9 @@ namespace SalehIdentityWebShop.Controllers
             if (ModelState.IsValid)
             {
                 //come from Login to here to change Email to Username as login 
-                var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
-                //we will gump to Views Account to change the same to display in view login and Register
+                /*we will add here new extra properties to display and input from users to not have exceptions because they are requiered*/
+                var user = new ApplicationUser { UserName = model.Username, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Age = model.Age, Adress = model.Adress};
+                //we will jump to Views Account to change the same to display in view login and Register
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

@@ -77,12 +77,33 @@ namespace SalehIdentityWebShop.Models
         [Required]
         [Display(Name = "Use Name")]
         public string Username { get; set; }
+        
         //but we need to change in view login to be as user name
-
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+        
+        /*we paste from identity same new properties here */
+        [Range(minimum: 0, maximum: 150)]
+        public int Age { get; set; }
+
+        [Required(AllowEmptyStrings = false)]
+        [MaxLength(length: 40)]
+        [MinLength(length: 2)]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [MaxLength(length: 40)]
+        [MinLength(length: 2)]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        public string Adress { get; set; }
+
+        //end of new properties then PM>Update-DataBase
+        //go to add in controller and view as register to have info from out as input properties to not have exceptions  for them 
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
@@ -94,6 +115,8 @@ namespace SalehIdentityWebShop.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+
     }
 
     public class ResetPasswordViewModel

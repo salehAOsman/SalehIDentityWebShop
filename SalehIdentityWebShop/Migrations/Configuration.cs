@@ -59,13 +59,16 @@ namespace SalehIdentityWebShop.Migrations
                 //we need new object from ApplicationUser to creat new user 
                 myAdmin = new ApplicationUser()
                 {
+                    
                     UserName = "Admin",
                     Email = "admin@admin.se",
-                    //Age = 99,
-                    //FirstName = "Admin",
-                    //LastName = "Administration",
-                    //Adress = "Admi-role 1"
+                    //after we add new properties to users then we need to add here this requierd properties 
+                    Age = 99,
+                    FirstName = "Admin",
+                    LastName = "Administration",
+                    Adress = "Admi-role 1"
                 };
+               
                 userManager.Create(myAdmin, "!23Qwe");      //we add now to Database
             }
             //another user
@@ -77,10 +80,11 @@ namespace SalehIdentityWebShop.Migrations
                 {
                     UserName = "Foo",
                     Email = "foo@foo.se",
-                    //Age = 0,
-                    //FirstName = "Foo",
-                    //LastName = "Foo",
-                    //Adress = "Foo-road 1"
+                    //after we add new properties to users then we need to add here this requierd properties 
+                    Age = 0,
+                    FirstName = "Foo",
+                    LastName = "Foo",
+                    Adress = "Foo-road 1"
                 };
                 userManager.Create(myFoo, "!23Qwe");      //we add now to Database
             }
