@@ -11,6 +11,16 @@
     <h4>Create a new account.</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
+    <!--we add here role for new user  as dorpDawon List -->
+    <div class="form-group">
+        @Html.LabelFor(m => m.RoleName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @*@Html.TextBoxFor(m => m.RoleName, new { @class = "form-control" })*@
+            <!--this connected with other variables -->
+            @Html.DropDownListFor(m => m.RoleName, new SelectList(ViewBag.Roles,"Value","Text"),new {@class="form-control" })
+        </div>
+    </div>
+    <!--end role -->
     <div class="form-group">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
@@ -77,4 +87,3 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 
-    

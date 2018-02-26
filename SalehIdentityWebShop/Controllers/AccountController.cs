@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -16,17 +17,37 @@ namespace SalehIdentityWebShop.Controllers
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
+        //Copy/Paste from here for Role and User manager
         private ApplicationUserManager _userManager;
-
+        
+        /* we continue to create User view to assign role to user here  */
+        private ApplicationRoleManager _roleManager;
+        //copy/paste same ApplicationSignInManager and change 
+        
         public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager,ApplicationRoleManager roleManager )
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            RoleManager = roleManager;
         }
+
+        //here paste for user and change every SingIn or user to role
+        public ApplicationRoleManager RoleManager
+        {
+            get
+            {
+                return _roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+            }
+            private set
+            {
+                _roleManager = value;
+            }
+        }
+        //to here jump to register down 
 
         public ApplicationSignInManager SignInManager
         {
@@ -142,7 +163,13 @@ namespace SalehIdentityWebShop.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            List<SelectListItem> list = new List<SelectListItem>();
+            foreach (var role in RoleManager.Roles)
+            {
+                list.Add(new SelectListItem() { Value = role.Name, Text = role.Name });
+                ViewBag.Roles = list;
+            }
+            return View();//go to register 
         }
 
         //
@@ -161,6 +188,7 @@ namespace SalehIdentityWebShop.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    result = await UserManager.AddToRoleAsync(user.Id, model.RoleName);//go to AcountViewModels.cs to decleare RoleName
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771

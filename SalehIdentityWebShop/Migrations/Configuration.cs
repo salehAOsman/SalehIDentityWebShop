@@ -29,14 +29,15 @@ namespace SalehIdentityWebShop.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
             ApplicationUser myAdmin;
             ApplicationUser myFoo;
             //I need to create new roleStore to create roleManager
-            var roleStore = new RoleStore<IdentityRole>(db);
+            var roleStore = new RoleStore<IdentityRole>(db);                    //what does it means ???
             //I need to create new roleManager to create userManager
             var roleManager = new RoleManager<IdentityRole>(roleStore);
 
-            var userStore = new UserStore<ApplicationUser>(db);
+            var userStore = new UserStore<ApplicationUser>(db);                 //what does it means ???
             var userManager = new UserManager<ApplicationUser>(userStore);
             //now we create a roles not users 
             if (roleManager.FindByName("Guru") == null)// check if it is first time then create new user
@@ -86,7 +87,7 @@ namespace SalehIdentityWebShop.Migrations
             //we will assign role as "Guru" to "myadmin" user 
             userManager.AddToRole(myAdmin.Id, "Guru");
             userManager.AddToRole(myFoo.Id, "Common");
-            
+
         }
     }
 }

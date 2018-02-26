@@ -41,7 +41,16 @@ namespace SalehIdentityWebShop.Models
             // Add custom user claims here
             return userIdentity;
         }
+
     }
+
+    //Saleh  For Add user to role we forllow this link //https://www.youtube.com/watch?v=IngL0-alQYk&list=PL-EU0JUF-XD2BpvdS_ognd6PiSoFX4k5_&index=11 
+    //*We start from here  to make ApplicationRole here to assign Role to User 
+    public class ApplicationRole : IdentityRole
+    {
+        public ApplicationRole():base() { }
+        public ApplicationRole(string roleName) :base (roleName){ } 
+    }// Jump to IdentityConfig.cs to last line to add
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -54,7 +63,15 @@ namespace SalehIdentityWebShop.Models
         {
             return new ApplicationDbContext();
         }
+
+        //public System.Data.Entity.DbSet<SalehIdentityWebShop.Models.RoleViewModel> RoleViewModels { get; set; }
+
+        //public System.Data.Entity.DbSet<SalehIdentityWebShop.Models.ApplicationUser> ApplicationUsers { get; set; }
+
+        //public System.Data.Entity.DbSet<SalehIdentityWebShop.Models.ApplicationUser> ApplicationUsers { get; set; }
+
+        //public System.Data.Entity.DbSet<SalehIdentityWebShop.Models.ApplicationUser> ApplicationUsers { get; set; }
         //project created by self this DbSet then we have here tow reference to db one already from identity  and another from Wizard when we create new view for usermanger   
-       // public System.Data.Entity.DbSet<SalehIdentityWebShop.Models.ApplicationUser> ApplicationUsers { get; set; }
+        // public System.Data.Entity.DbSet<SalehIdentityWebShop.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }

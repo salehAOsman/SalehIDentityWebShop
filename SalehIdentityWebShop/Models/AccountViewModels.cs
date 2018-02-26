@@ -116,6 +116,11 @@ namespace SalehIdentityWebShop.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        //we folow display user to role 
+        public string PhoneNumber { get; set; }
+        public string RoleName { get; set; } 
+        /*go back to AcountController to see solving intellesence then go to 
+        Register inside Acount View in Views to make dropList to assign role to new users */ 
 
     }
 
