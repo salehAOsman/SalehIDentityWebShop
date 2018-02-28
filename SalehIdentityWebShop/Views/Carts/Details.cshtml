@@ -1,0 +1,53 @@
+﻿@model SalehIdentityWebShop.Models.Cart
+
+@{
+    ViewBag.Title = "Details Cart";
+}
+
+<h2>Details of Cart</h2>
+
+<div>
+    <h4>Cart</h4>
+    <hr />
+
+
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Add Product", "AddProductToCart", new { cId = Model.Id }) |<!--I need here product 'Id' to display it in view to add to it an cart from list-->
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+<!--we add here sub list of Products -->
+<h2> Here is sublist of products </h2>
+@if (Model.CartItems.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.CartItems[0].Products.Name)</th>
+                <th>@Html.DisplayNameFor(model => model.CartItems[0].Products.Price)</th>
+                <th>@Html.DisplayNameFor(model => model.CartItems[0].Products.Description)</th>
+               
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CartItems)
+            {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Products.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.Products.Price)</td>
+                <td>@Html.DisplayFor(modelItem => item.Products.Description)</td>
+                <td>
+                <td>
+                    @Html.ActionLink("Details", "Details", "Products", new { id = item.Products.Id }, new { @class = "btn btn-info" }) |
+                    @Html.ActionLink("Delete", "DeleteProductFromCart", new { pId = item.Products.Id, cId = Model.Id }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{<p>no product in your Cart</p>}

@@ -8,14 +8,14 @@ namespace SalehIdentityWebShop.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<SalehIdentityWebShop.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<SalehIdentityWebShop.Models.WebShopDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(SalehIdentityWebShop.Models.ApplicationDbContext db)
+        protected override void Seed(SalehIdentityWebShop.Models.WebShopDbContext db)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -29,7 +29,6 @@ namespace SalehIdentityWebShop.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-
             ApplicationUser myAdmin;
             ApplicationUser myFoo;
             //I need to create new roleStore to create roleManager
@@ -59,7 +58,7 @@ namespace SalehIdentityWebShop.Migrations
                     Age = 99,
                     FirstName = "Admin",
                     LastName = "Administration",
-                    Adress = "Admi-role 1"
+                    Address = "Admi-role 1"
                 };
                 userManager.Create(myAdmin, "!23Qwe");      //we add now to Database
             }
@@ -70,12 +69,13 @@ namespace SalehIdentityWebShop.Migrations
                 //ApplicationUser myFoo = new ApplicationUser();
                 myFoo = new ApplicationUser()
                 {
+
                     UserName = "Foo",
                     Email = "foo@foo.se",
                     Age = 0,
                     FirstName = "Foo",
                     LastName = "Foo",
-                    Adress = "Foo-road 1"
+                    Address = "Foo-road 1"
                 };
                 userManager.Create(myFoo, "!23Qwe");      //we add now to Database
             }

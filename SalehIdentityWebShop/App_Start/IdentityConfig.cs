@@ -42,7 +42,7 @@ namespace SalehIdentityWebShop
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
         {
-            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
+            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<WebShopDbContext>()));
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
@@ -112,7 +112,7 @@ namespace SalehIdentityWebShop
         public ApplicationRoleManager(IRoleStore<ApplicationRole,string> roleStore) : base(roleStore) { }
         public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options,IOwinContext context)
         {
-            var applicationRoleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(context.Get<ApplicationDbContext>()));
+            var applicationRoleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(context.Get<WebShopDbContext>()));
             return applicationRoleManager;
         }
     }//* Jump to Startup.Auth.cs to add in line 22

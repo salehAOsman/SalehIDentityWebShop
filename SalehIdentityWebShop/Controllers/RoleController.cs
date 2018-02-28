@@ -18,7 +18,6 @@ namespace SalehIdentityWebShop.Controllers
         //After paste here we change to be like this 
         //we change word 'user' to 'role' and 'acount' to 'role' in every places   
         private ApplicationRoleManager _roleManager;
-
         
         public RoleController()
         {
@@ -98,6 +97,12 @@ namespace SalehIdentityWebShop.Controllers
             var role = await RoleManager.FindByIdAsync(id);
 
             return View(new RoleViewModel(role));
+        }
+        public async Task<ActionResult> RoleNameDetails(string name)
+        {
+            var role = await RoleManager.FindByNameAsync(name);
+
+            return View("Details",new RoleViewModel(role));
         }
         //continue to build this
         // GET: Role/Delete/5

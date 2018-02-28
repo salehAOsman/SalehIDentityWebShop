@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -28,11 +30,27 @@ namespace SalehIdentityWebShop.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-        public string Adress { get; set; }
+        public string Address { get; set; }
+
+        public List<Order> Orders { get; set; }//
+        public Cart Cart { get; set; }
+
+
+        public ApplicationUser(int age, string firstName, string lastName, string address)
+        {
+            Age = age;
+            FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName));
+            LastName = lastName ?? throw new ArgumentNullException(nameof(lastName));
+            Address = address ?? throw new ArgumentNullException(nameof(address));
+        }
+
+        public ApplicationUser()
+        {
+        }
 
         // now we have to added to AcountViewModel but we need to make Update-database before because we add new proprties  
         /* then we will add to AcountViewModel register and AcountController register and Views in register and we have 
-        * to go back to seed to give new properties same we added here to both new users because those are required */ 
+        * to go back to seed to give new properties same we added here to both new users because those are required */
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -41,7 +59,6 @@ namespace SalehIdentityWebShop.Models
             // Add custom user claims here
             return userIdentity;
         }
-
     }
 
     //Saleh  For Add user to role we forllow this link //https://www.youtube.com/watch?v=IngL0-alQYk&list=PL-EU0JUF-XD2BpvdS_ognd6PiSoFX4k5_&index=11 
@@ -49,29 +66,33 @@ namespace SalehIdentityWebShop.Models
     public class ApplicationRole : IdentityRole
     {
         public ApplicationRole():base() { }
-        public ApplicationRole(string roleName) :base (roleName){ } 
+        public ApplicationRole(string roleName) :base (roleName) { } 
     }// Jump to IdentityConfig.cs to last line to add
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    /*we need to change the name of this class and the constractor dawon by same name, that will
+     * help to connect the database with name of ConnectionString, we have this name */
+    //then we use this name of class to declare a db reference to fitch tables in DataBase 
+    public class WebShopDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext()
+        public WebShopDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
 
-        public static ApplicationDbContext Create()
+        public static WebShopDbContext Create()
         {
-            return new ApplicationDbContext();
+            return new WebShopDbContext();
         }
 
-        //public System.Data.Entity.DbSet<SalehIdentityWebShop.Models.RoleViewModel> RoleViewModels { get; set; }
+        //after we add new classes in Models we need to add DbSet here to connect with dbase for each table 
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
+        //if we need to connect with user we go upp to 'ApplicationUser'
         //public System.Data.Entity.DbSet<SalehIdentityWebShop.Models.ApplicationUser> ApplicationUsers { get; set; }
-
-        //public System.Data.Entity.DbSet<SalehIdentityWebShop.Models.ApplicationUser> ApplicationUsers { get; set; }
-
-        //public System.Data.Entity.DbSet<SalehIdentityWebShop.Models.ApplicationUser> ApplicationUsers { get; set; }
-        //project created by self this DbSet then we have here tow reference to db one already from identity  and another from Wizard when we create new view for usermanger   
-        // public System.Data.Entity.DbSet<SalehIdentityWebShop.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }

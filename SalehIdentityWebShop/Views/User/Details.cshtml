@@ -1,0 +1,112 @@
+﻿@model SalehIdentityWebShop.Models.UserViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+<h2>Details User</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Age)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Age)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+    </dl>
+</div>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @*@Html.ActionLink("Details", "Details", new { id = Model.Id }) |*@
+    <!--1 change to 'Add Course' to Student and change id to sId -->
+    @Html.ActionLink("Add Role", "AddRoleToUser", new { sId = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+<!--2 we add here div to display subList of courses for this student-->
+<h2>Index role of user</h2>
+@if (Model.Roles.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @*Name*@
+                    @Html.DisplayNameFor(model => model.Roles)
+                </th>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.Roles[0].Description)
+                    </th>*@
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Roles)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item)</td>
+                    @*<td>@Html.DisplayFor(modelItem => item.Description)</td>*@
+                    <td>
+                        @*@Html.ActionLink("Edit", "Edit", "Courses", new { id = item.Id }, new { @class = "btn btn-info" }) |*@
+                        @Html.ActionLink("Details", "Details", "Roles", new { name = item }, new { @class = "btn btn-info" }) |
+                        @Html.ActionLink("Delete", "DeleteRoleFromUser", new { name = item, uId = Model.Id }, new { @class = "btn btn-danger" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <!--3 now we have to change in 'Details' action to be as 'AddCourseToStudent' in student controller -->
+}
+else
+{
+    <p>This Student is not in any Courses at the moment</p>
+}
+

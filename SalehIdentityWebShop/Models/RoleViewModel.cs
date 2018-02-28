@@ -8,15 +8,17 @@ namespace SalehIdentityWebShop.Models
 {
     public class RoleViewModel
     {
+        //we need this viewModel to display role of user in view 
+        public string Id { get; set; }
+        public string Name { get; set; }
+
         public RoleViewModel() { }
-        public RoleViewModel(ApplicationRole role)
+        public RoleViewModel(ApplicationRole role) //constractor 
         {
             Id = role.Id;
             Name = role.Name;
-         
         }
 
-        public string Id { get; set; }
-        public string Name { get; set; }
     }
-}//we jump to controller and create new controller select 'Empty one' or crud, the name is Role 
+}
+//we jump to controller and create new controller select 'Empty one' or crud, the name is Role 
