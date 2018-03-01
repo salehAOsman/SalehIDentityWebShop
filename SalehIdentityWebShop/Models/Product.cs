@@ -17,7 +17,7 @@ namespace SalehIdentityWebShop.Models
 
         [Required]
         [Range(0.01, double.MaxValue, ErrorMessage = "Please enter a positive price")]
-        public double Price { get; set; }
+        public int Price { get; set; }
 
         [Required(ErrorMessage = "Please enter the description")]
         public string Description { get; set; }

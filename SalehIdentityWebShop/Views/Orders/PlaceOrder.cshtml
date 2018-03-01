@@ -1,0 +1,59 @@
+﻿@model SalehIdentityWebShop.Models.Order
+
+@{
+    ViewBag.Title = "PlaceOrder";
+}
+
+<h2>Place Order</h2>
+
+<h2> Here is sublist of your products </h2>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
+<div>
+    <h4>Order </h4>
+    <h4>@ViewBag.userName </h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>@Html.DisplayNameFor(model => model.Id)</dt>
+        <dt>@Html.DisplayNameFor(model => model.OrderDate)</dt>
+        <dd>@Html.DisplayFor(model => model.Id)</dd>
+        <dd>@Html.DisplayFor(model => model.OrderDate)</dd>
+
+        <dd>
+            @if (Model.OrderItems.Count > 0)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.OrderItems[0].Products.Name)</th>            <!--fitch title of column from table-->
+                            <th>@Html.DisplayNameFor(model => model.OrderItems[0].Products.Price)</th>
+                            <th>@Html.DisplayNameFor(model => model.OrderItems[0].Products.Description)</th>
+                            <th>@Html.DisplayNameFor(model => model.OrderItems[0].Amount)</th>                   <!--we can use to avoid repiting items in list-->
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OrderItems)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.Products.Name)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Products.Price)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Products.Description)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Amount)</td>                                 <!--from CartItem-->
+                                <td>
+                                <td>
+                                    @*@Html.ActionLink("Details", "Details" , new { id = item.Products.Id }, new { @class = "btn btn-info" }) |*@
+                                    @*@Html.ActionLink("Delete", "DeleteProductFromOrder", new { pId = item.Products.Id, cId = Model.Id }, new { @class = "btn btn-danger" })*@
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <h3>@Html.ActionLink("Back List", "Index")</h3>
+            }
+            else
+            {<p>No products in your Reciept</p>}
+        </dd>
+    </dl>
+</div>

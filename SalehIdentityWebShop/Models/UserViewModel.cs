@@ -29,6 +29,7 @@ namespace SalehIdentityWebShop.Models
         {
         }
 
+        //constractor input from user class and from role class to display name of user and his roles as list
         public UserViewModel(ApplicationUser user, IList<string> UserRolesNames)
         {
             Id = user.Id;

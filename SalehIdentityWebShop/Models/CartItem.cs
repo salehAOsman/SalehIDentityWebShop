@@ -11,8 +11,8 @@ namespace SalehIdentityWebShop.Models
 
         public int Amount { get; set; }
 
-        public virtual Product Products { get; set; }        // reference for people 
-
+        public virtual Product Products { get; set; }            // reference for people 
+        
         //public virtual Cart Cart { get; set; }                 // this is if we need to navigat about it opposite database,  navigation property* ----> 1
     }
 }

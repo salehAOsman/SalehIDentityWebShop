@@ -16,24 +16,22 @@ namespace SalehIdentityWebShop.Controllers
         private WebShopDbContext db = new WebShopDbContext();
 
         // GET: Carts
-        public ActionResult Index()
-        {
-            return View(db.Carts.ToList());
-        }
+        //public ActionResult Index()
+        //{
+        //    return View(db.Carts.ToList());
+        //}
 
         // GET: Carts/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Cart cart = db.Carts.Include("CartItems").SingleOrDefault(c => c.Id == id);
-            if (cart == null)
+            var userId = User.Identity.GetUserId();
+            var user = db.Users.Include("Cart").Include("Cart.CartItems").Include("Cart.CartItems.Products").SingleOrDefault(u => u.Id == userId);
+
+            if (user.Cart == null)
             {
                 return HttpNotFound();
             }
-            return View(cart);
+            return View(user.Cart);
         }
 
         // GET: Carts/Create
@@ -124,27 +122,13 @@ namespace SalehIdentityWebShop.Controllers
             }
             base.Dispose(disposing);
         }
-
-        //1*
-        [HttpGet]
-        public ActionResult AddProductToCart(int? cId)//Add product To Cart
-        {
-            if (cId == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            List<Product> products = db.Products.ToList();//reference to products list
-            ViewBag.cId = cId;//product Id
-            return View(products);
-        }
-
+        
         //2*
         [HttpGet]
-        public ActionResult ProductToCart(int? pId)                                 //Add Product To Cart
+        public ActionResult ProductToCart(int? pId,string op)       // input variable from view           Add Product To Cart
         {
             var userId= User.Identity.GetUserId();                                  //we have id of user by this code 
-            var user = db.Users.Include("Cart").SingleOrDefault(u=>u.Id == userId);// we have now user Object that has the product that he selected
+            var user = db.Users.Include("Cart").Include("Cart.CartItems").SingleOrDefault(u=>u.Id == userId);// we have now user Object that has the product that he selected
 
             if (user.Cart == null)
             {
@@ -155,14 +139,26 @@ namespace SalehIdentityWebShop.Controllers
 
             foreach (var item in user.Cart.CartItems)                                //we will check in cart by loop 
             {
-                if (item.Id== pId)                                                   //product id
+                if (item.Products.Id== pId)                                                   //product id
                 {
-                    item.Amount++;                                                  // if it found then add amount 1 more
+                    if (op == "minus")
+                    {
+                        item.Amount--;
+                        if (item.Amount<1)
+                        {
+                            //user.Cart.CartItems.Remove(item); //history it does not delete data from data base it is like history 
+                            db.CartItems.Remove(item);
+                        }
+                    }
+                    else
+                    {
+                        item.Amount++;                                                  // if it found then add amount 1 more
+                    }
                     notFound = false;                                               // then give false to variable to not go inside next block in cart
                     break;                                                          // do not look for other products because we focus about this product
                 }
             }
-            if (notFound) 
+            if (notFound && op != "minus") 
             {
                 Product product = db.Products.SingleOrDefault(a => a.Id == pId);      // we found product then we will fitch id 
                 CartItem newItem = new CartItem();                                    // new cartItem
@@ -171,10 +167,12 @@ namespace SalehIdentityWebShop.Controllers
                 user.Cart.CartItems.Add(newItem);                                     // we add this object as product to cart  
             }
             db.SaveChanges();
-
-            return RedirectToAction("Index","Products", new { id = user.Cart.Id });
-            //return RedirectToAction("Details", new { id = user.Cart.Id });
-
+            //I try to fix when call it from product side then it has to get back to Product Index view 
+            if (op=="bToP")
+            {
+                return RedirectToAction("Index","Products");
+            }
+             return RedirectToAction("Details", new { id = user.Cart.Id });
         }
     }
 }

@@ -15,6 +15,10 @@ namespace SalehIdentityWebShop.Models
         // public virtual ApplicationUser UserApp { get; set; }     //Forgen key "UserApp" if we need to now how is the user for this Order       //reference to people
 
         public List<OrderItem> OrderItems { get; set; }          //      add columns from Order as list for mor details
-        
+
+        public Order()
+        {
+            OrderItems = new List<OrderItem>();
+        }
     }
 }

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SalehIdentityWebShop.Models;
+using Microsoft.AspNet.Identity;
 
 namespace SalehIdentityWebShop.Controllers
 {
@@ -36,27 +37,51 @@ namespace SalehIdentityWebShop.Controllers
         }
 
         // GET: Orders/Create
-        public ActionResult Create()
+        public ActionResult PlaceOrder()
         {
-            return View();
+            //we need new object to use it to disply just user Cart, but not all users from dbase 
+            var userId = User.Identity.GetUserId();                                                                      // we have id of user by this code to assign his cart to display in recipt not for all users  
+            var user = db.Users.Include("Cart").Include("Cart.CartItems").Include("Orders").Include("Orders.OrderItems").SingleOrDefault(u => u.Id == userId); // by this way we fitch the database table
+            ViewBag.userName = "FirstName: " + user.FirstName + ",LastName : " + user.LastName;
+            if (user.Cart.CartItems.Count < 1)
+            {
+                return RedirectToAction("Details","Carts");
+            }
+            Order order = new Order();
+            order.OrderDate = DateTime.Now;
+
+            foreach (var item in user.Cart.CartItems)
+            {
+                OrderItem orderItem = new OrderItem();//assign DateTime to orderItem table in db  
+                orderItem.Amount = item.Amount;
+                orderItem.Price = item.Products.Price;  
+                orderItem.Products = item.Products;//we assign all properties from this product object
+                order.OrderItems.Add(orderItem); //added every order item to dabaBase  OrderItems table 
+            }
+            user.Orders.Add(order); //we add order list to 'user' object
+            user.Cart.CartItems.Clear();//reset CartItem list
+
+            db.SaveChanges();
+            
+            return View(order);
         }
 
         // POST: Orders/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,OrderDate")] Order order)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Orders.Add(order);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "Id,OrderDate")] Order order)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Orders.Add(order);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
 
-            return View(order);
-        }
+        //    return View(order);
+        //}
 
         // GET: Orders/Edit/5
         public ActionResult Edit(int? id)

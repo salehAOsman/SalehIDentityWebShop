@@ -17,8 +17,6 @@ namespace SalehIdentityWebShop.Controllers
         // GET: Products
         public ActionResult Index()
         {
-            
-
             return View(db.Products.ToList());
         }
 
@@ -56,7 +54,6 @@ namespace SalehIdentityWebShop.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             return View(product);
         }
 
@@ -126,6 +123,5 @@ namespace SalehIdentityWebShop.Controllers
             base.Dispose(disposing);
         }
 
-        
     }
 }

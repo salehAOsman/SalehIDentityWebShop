@@ -13,7 +13,7 @@ namespace SalehIdentityWebShop.Models
         public string Name { get; set; }
 
         public RoleViewModel() { }
-        public RoleViewModel(ApplicationRole role) //constractor 
+        public RoleViewModel(ApplicationRole role) //constractor to give not empty role by overload role object
         {
             Id = role.Id;
             Name = role.Name;
