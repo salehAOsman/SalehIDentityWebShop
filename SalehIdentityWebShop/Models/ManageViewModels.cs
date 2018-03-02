@@ -9,11 +9,34 @@ namespace SalehIdentityWebShop.Models
     {
         public bool HasPassword { get; set; }
         public IList<UserLoginInfo> Logins { get; set; }
+
         public string PhoneNumber { get; set; }
+
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
-    }
 
+        //adding to user management this properties to join with manager 
+        [Range(minimum: 0, maximum: 150)]
+        public int Age { get; set; }
+
+        [Required(AllowEmptyStrings = false)]
+        [MaxLength(length: 40)]
+        [MinLength(length: 2)]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [MaxLength(length: 40)]
+        [MinLength(length: 2)]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        public string Address { get; set; }
+
+        public string Phone { get; set; }
+        //we need to add id of user here to use it with edit method in view ViewModel to let user change his owner info
+        public int Id { get; set; }
+    }
     public class ManageLoginsViewModel
     {
         public IList<UserLoginInfo> CurrentLogins { get; set; }
@@ -84,3 +107,4 @@ namespace SalehIdentityWebShop.Models
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
     }
 }
+

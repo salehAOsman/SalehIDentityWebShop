@@ -1,26 +1,57 @@
 ﻿@model SalehIdentityWebShop.Models.Order
-
 @{
     ViewBag.Title = "Details";
+    double total = 0;
 }
-
 <h2>Details</h2>
-
 <div>
     <h4>Order</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.OrderDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OrderDate)
-        </dd>
-
+        <dt>@Html.DisplayNameFor(model => model.OrderDate)</dt>
+        <dd>@Html.DisplayFor(model => model.OrderDate)</dd>
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<!--here -->
+<h2> Here is sublist of products </h2>
+@if (Model.OrderItems.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.OrderItems[0].Products.Name)</th>            <!--fitch title of column from table-->
+                <th>@Html.DisplayNameFor(model => model.OrderItems[0].Products.Price)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderItems[0].Products.Description)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderItems[0].Amount)</th>                   <!--we can use to avoid repiting items in list-->
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderItems)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Products.Name)</td><!--we fitch name from products class we do not doublicate the column-->
+                    <td>@Html.DisplayFor(modelItem => item.Price)</td><!--this price come from history not now because price could change-->
+                    <td>@Html.DisplayFor(modelItem => item.Products.Description)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Amount)</td>                                 <!--from CartItem-->
+                    <td>
+                    <td>
+                        @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
+                        @Html.ActionLink("Back to List", "Index")
+                    </td>
+                </tr>
+                total = total + (item.Price * item.Amount);
+            }
+        </tbody>
+    </table>
+    <h3>Total price: @total</h3>
+}
+else
+{<p>No products in your Order</p>}
+
+
+
+
+
+<!--here is-->
+

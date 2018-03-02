@@ -74,6 +74,7 @@ namespace SalehIdentityWebShop.Models
     //then we use this name of class to declare a db reference to fitch tables in DataBase 
     public class WebShopDbContext : IdentityDbContext<ApplicationUser>
     {
+        //we have to change the name of this up class to not be look like name of project 
         public WebShopDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
@@ -84,7 +85,6 @@ namespace SalehIdentityWebShop.Models
             return new WebShopDbContext();
         }
 
-        //after we add new classes in Models we need to add DbSet here to connect with dbase for each table 
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }

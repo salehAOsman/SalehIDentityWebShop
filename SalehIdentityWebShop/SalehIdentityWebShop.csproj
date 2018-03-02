@@ -195,6 +195,7 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OrderItemsController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
@@ -307,6 +308,12 @@
     <Content Include="Views\Carts\Edit.cshtml" />
     <Content Include="Views\Carts\Index.cshtml" />
     <Content Include="Views\Orders\PlaceOrder.cshtml" />
+    <Content Include="Views\OrderItems\Create.cshtml" />
+    <Content Include="Views\OrderItems\Delete.cshtml" />
+    <Content Include="Views\OrderItems\Details.cshtml" />
+    <Content Include="Views\OrderItems\Edit.cshtml" />
+    <Content Include="Views\OrderItems\Index.cshtml" />
+    <Content Include="Views\Manage\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

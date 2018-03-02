@@ -15,7 +15,7 @@
         <th>@Html.DisplayNameFor(model => model.AvailableStorage)</th>
         <th>@Html.DisplayNameFor(model => model.Image)</th>
         <th></th>
-    </tr>
+    @*</tr>*@
 
 @foreach (var item in Model) {
     <tr>
@@ -34,4 +34,4 @@
 }
 </table>
 
-
+<p>@Html.ActionLink("Back Home","Index","Home")</p>

@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SalehIdentityWebShop.Models;
+//using static SalehIdentityWebShop.Models.IndexViewModel;//Whay I need this using Static 
 
 namespace SalehIdentityWebShop.Controllers
 {
@@ -15,6 +16,10 @@ namespace SalehIdentityWebShop.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        
+        //we add db to ritch database
+        WebShopDbContext db = new WebShopDbContext();
+
 
         public ManageController()
         {
@@ -62,19 +67,64 @@ namespace SalehIdentityWebShop.Controllers
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                 : "";
+            //we create object of user here to modifiy the view 
+            var userId = User.Identity.GetUserId();//we fitch id of login user here 
+            var user = db.Users.SingleOrDefault(u => u.Id == userId); //we fitch user that using this id 
 
-            var userId = User.Identity.GetUserId();
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                
+                //we assign what we add in ManageViewModels to user object 
+                //here we add this new proerties to give user permition to change his properties by self in manage side
+
+                FirstName=user.FirstName,
+                LastName=user.LastName,
+                Age=user.Age,
+                Address = user.Address,
+                Phone=user.PhoneNumber
+                //this case we already have it in Identity but we need to show it to user by silf in view then we assign it after we create new property in viewmodel 
+                
+
             };
             return View(model);
         }
 
+        [HttpGet]
+        public ActionResult Edit()
+        {
+            var userId = User.Identity.GetUserId();//I fitch id not from dbase but from login by Identity frameWroke
+            var user = db.Users.Find(userId); //we use this id to fitch user object We do not use SingelOdDefault because we do not need including nested tables 
+
+            IndexViewModel model = new IndexViewModel(); // we need to place this info in new obj
+            model.FirstName = user.FirstName;//we transfert from data to indexViewModel
+            model.LastName = user.LastName; //we will transfer info from intity side to indexViewModel to display it to change
+            model.Age = user.Age;
+            model.Phone = user.PhoneNumber;
+
+            return View(model); //returen to display info 
+        }
+
+        [HttpPost]//we need to add more check if then for null user
+        public ActionResult Edit(IndexViewModel inUser) // we need to fitch info from user to save it in dataBase
+        {
+
+            var userId = User.Identity.GetUserId();         //I fitchs the Id but not from dbase It comes from Login by Identity FrameWroke
+            var user = db.Users.Find(userId);               //we use this Id to fitch user object We do not use SingelOrdDefault because we do not need including nested tables 
+
+            user.FirstName = inUser.FirstName; //we transfer the changes info to database by ApplicationUser class
+            user.LastName = inUser.LastName;
+            user.Age = inUser.Age;
+            user.PhoneNumber = inUser.Phone;
+
+            db.SaveChanges();
+
+            return RedirectToAction("Index"); // to 
+        }
         //
         // POST: /Manage/RemoveLogin
         [HttpPost]
@@ -105,7 +155,6 @@ namespace SalehIdentityWebShop.Controllers
         {
             return View();
         }
-
         //
         // POST: /Manage/AddPhoneNumber
         [HttpPost]
@@ -368,7 +417,7 @@ namespace SalehIdentityWebShop.Controllers
             var user = UserManager.FindById(User.Identity.GetUserId());
             if (user != null)
             {
-                return user.PhoneNumber != null;
+                return user.FirstName != null;
             }
             return false;
         }

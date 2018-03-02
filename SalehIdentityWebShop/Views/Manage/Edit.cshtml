@@ -1,0 +1,21 @@
+﻿@model SalehIdentityWebShop.Models.IndexViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit Personal info </h2>
+@using (Html.BeginForm())
+{
+    <dl>
+        <dt>@Html.DisplayNameFor(model => model.FirstName)</dt>
+        <dd>@Html.EditorFor(model => model.FirstName)</dd>
+        <dt>@Html.DisplayNameFor(model => model.LastName)</dt>
+        <dd>@Html.EditorFor(model => model.LastName)</dd>
+        <dt>@Html.DisplayNameFor(model => model.Age)</dt>
+        <dd>@Html.EditorFor(model => model.Age)</dd>
+        <dt>@Html.DisplayNameFor(model => model.Phone)</dt>
+        <dd>@Html.EditorFor(model => model.Phone)</dd>
+    </dl>
+    <input type="submit"  value="Save" />
+}
+

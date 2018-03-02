@@ -7,10 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SalehIdentityWebShop.Models;
-using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity;//when we have INumurable type then we use UsingSpace from Identity it will give os the same functionality
 
 namespace SalehIdentityWebShop.Controllers
 {
+    [Authorize]
     public class OrdersController : Controller
     {
         private WebShopDbContext db = new WebShopDbContext();
@@ -27,20 +28,48 @@ namespace SalehIdentityWebShop.Controllers
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Order order = db.Orders.Find(id);
+            }//we need to fitch information for orderItem but we need at include products inside it
+            Order order = db.Orders.Include("OrderItems").Include("OrderItems.Products").SingleOrDefault(oI=>oI.Id == id);
             if (order == null)
             {
                 return HttpNotFound();
             }
+            
             return View(order);
         }
 
+        //public ActionResult PlaceOderItems(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    OrderItem orderItem = db.OrderItems.Find(id);
+        //    if (orderItem == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    if (orderItem.Amount < 1)
+        //    {
+        //        return RedirectToAction("Details", "Orders");
+        //    }
+        //    // orderItem need loop
+        //    foreach (var item in OrderItem)
+        //    {
+        //        OrderItem orderItem = new OrderItem();//assign DateTime to orderItem table in db  
+        //        orderItem.Amount = item.Amount;
+        //        orderItem.Price = item.Products.Price;
+        //        orderItem.Products = item.Products;//we assign all properties from this product object
+        //        order.OrderItems.Add(orderItem); //we assign every sub object 'orderItem' to main object 'order' added every order item to dabaBase  OrderItems table 
+        //    }
+            
+        //    return View();
+        //}
         // GET: Orders/Create
         public ActionResult PlaceOrder()
         {
             //we need new object to use it to disply just user Cart, but not all users from dbase 
-            var userId = User.Identity.GetUserId();                                                                      // we have id of user by this code to assign his cart to display in recipt not for all users  
+            var userId = User.Identity.GetUserId();                                                                  // we have id of user by this code to assign his cart to display in recipt not for all users  
             var user = db.Users.Include("Cart").Include("Cart.CartItems").Include("Orders").Include("Orders.OrderItems").SingleOrDefault(u => u.Id == userId); // by this way we fitch the database table
             ViewBag.userName = "FirstName: " + user.FirstName + ",LastName : " + user.LastName;
             if (user.Cart.CartItems.Count < 1)
@@ -49,7 +78,6 @@ namespace SalehIdentityWebShop.Controllers
             }
             Order order = new Order();
             order.OrderDate = DateTime.Now;
-
             foreach (var item in user.Cart.CartItems)
             {
                 OrderItem orderItem = new OrderItem();//assign DateTime to orderItem table in db  

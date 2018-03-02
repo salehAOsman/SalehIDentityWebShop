@@ -1,6 +1,7 @@
 ﻿@model SalehIdentityWebShop.Models.Cart
 @{
     ViewBag.Title = "Details Cart";
+    double total = 0;<!--variable for total-->
 }
 <h2>Details of Cart</h2>
 <div>
@@ -9,12 +10,12 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Add Product", "ProductToCart","Carts", new { cId = Model.Id }) |                   <!--I need here product 'Id' to display it in view to add to it an cart from list-->
+    @Html.ActionLink("Add Product", "ProductToCart", "Carts", new { cId = Model.Id }) |                   <!--I need here product 'Id' to display it in view to add to it an cart from list-->
     @Html.ActionLink("Back to List", "Index")
 </p>
 <!--we add here sub list of Products -->
 <h2> Here is sublist of products </h2>
-@if (Model.CartItems.Count > 0) 
+@if (Model.CartItems.Count > 0)
 {
     <table class="table">
         <thead>
@@ -29,23 +30,26 @@
         <tbody>
             @foreach (var item in Model.CartItems)
             {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.Products.Name)</td>
-                <td>@Html.DisplayFor(modelItem => item.Products.Price)</td>
-                <td>@Html.DisplayFor(modelItem => item.Products.Description)</td>
-                <td>@Html.DisplayFor(modelItem => item.Amount)</td>                                 <!--from CartItem-->
-                <td>
-                <td>
-                    @Html.ActionLink("+", "ProductToCart", new { pId = item.Products.Id, op = "plus" }, new { @class = "btn btn-default sx-3" })
-                    @Html.ActionLink("-", "ProductToCart", new { pId = item.Products.Id, op = "minus" }, new { @class = "btn btn-default sx-3" }) 
-                    @*@Html.ActionLink("Details", "Details" , new { id = item.Products.Id }, new { @class = "btn btn-info" }) |*@
-                    @*@Html.ActionLink("Delete", "DeleteProductFromCart", new { pId = item.Products.Id, cId = Model.Id }, new { @class = "btn btn-danger" })*@
-                </td>
-            </tr>
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Products.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Products.Price)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Products.Description)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Amount)</td>                                 <!--from CartItem-->
+                    <td>
+                    <td>
+                        @Html.ActionLink("+", "ProductToCart", new { pId = item.Products.Id, op = "plus" }, new { @class = "btn btn-default sx-3" })
+                        @Html.ActionLink("-", "ProductToCart", new { pId = item.Products.Id, op = "minus" }, new { @class = "btn btn-default sx-3" })
+                        @*@Html.ActionLink("Details", "Details" , new { id = item.Products.Id }, new { @class = "btn btn-info" }) |*@
+                        @*@Html.ActionLink("Delete", "DeleteProductFromCart", new { pId = item.Products.Id, cId = Model.Id }, new { @class = "btn btn-danger" })*@
+                    </td>
+                </tr>
+                total = total + (item.Products.Price * item.Amount);
             }
         </tbody>
     </table>
-    <h3>@Html.ActionLink("Place Order", "PlaceOrder","Orders")</h3>
+    <h3>Total price: @total</h3>
+
+    <h3>@Html.ActionLink("Place Order", "PlaceOrder", "Orders")</h3>
 }
 else
 {<p>No products in your Cart</p>}

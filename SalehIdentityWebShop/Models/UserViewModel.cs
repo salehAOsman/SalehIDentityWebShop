@@ -37,7 +37,7 @@ namespace SalehIdentityWebShop.Models
             FirstName = user.FirstName;
             LastName = user.LastName;
             Age = user.Age;
-            PhoneNumber = user.PhoneNumber;
+            PhoneNumber = user.FirstName;
             Address = user.Address;
 
             Roles = UserRolesNames.ToList();
