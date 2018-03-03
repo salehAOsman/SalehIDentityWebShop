@@ -61,13 +61,13 @@ namespace SalehIdentityWebShop.Models
         }
     }
 
-    //Saleh  For Add user to role we forllow this link //https://www.youtube.com/watch?v=IngL0-alQYk&list=PL-EU0JUF-XD2BpvdS_ognd6PiSoFX4k5_&index=11 
+    //Saleh  For Add user to role we follow this link //https://www.youtube.com/watch?v=IngL0-alQYk&list=PL-EU0JUF-XD2BpvdS_ognd6PiSoFX4k5_&index=11 
     //*We start from here  to make ApplicationRole here to assign Role to User 
     public class ApplicationRole : IdentityRole
     {
         public ApplicationRole():base() { }
         public ApplicationRole(string roleName) :base (roleName) { } 
-    }// Jump to IdentityConfig.cs to last line to add
+    }   // Jump to IdentityConfig.cs to last line to add
 
     /*we need to change the name of this class and the constractor dawon by same name, that will
      * help to connect the database with name of ConnectionString, we have this name */

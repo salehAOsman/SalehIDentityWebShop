@@ -100,7 +100,7 @@ namespace SalehIdentityWebShop.Controllers
             var userId = User.Identity.GetUserId();//I fitch id not from dbase but from login by Identity frameWroke
             var user = db.Users.Find(userId); //we use this id to fitch user object We do not use SingelOdDefault because we do not need including nested tables 
 
-            IndexViewModel model = new IndexViewModel(); // we need to place this info in new obj
+            IndexViewModel model = new IndexViewModel(); // we need place to save this info in new obj
             model.FirstName = user.FirstName;//we transfert from data to indexViewModel
             model.LastName = user.LastName; //we will transfer info from intity side to indexViewModel to display it to change
             model.Age = user.Age;
@@ -112,18 +112,18 @@ namespace SalehIdentityWebShop.Controllers
         [HttpPost]//we need to add more check if then for null user
         public ActionResult Edit(IndexViewModel inUser) // we need to fitch info from user to save it in dataBase
         {
-
-            var userId = User.Identity.GetUserId();         //I fitchs the Id but not from dbase It comes from Login by Identity FrameWroke
-            var user = db.Users.Find(userId);               //we use this Id to fitch user object We do not use SingelOrdDefault because we do not need including nested tables 
-
-            user.FirstName = inUser.FirstName; //we transfer the changes info to database by ApplicationUser class
-            user.LastName = inUser.LastName;
+            //now we fitch part of info from user to save it but we do not know how is owner of it so we fitch id user to assing it to hem
+            var userId = User.Identity.GetUserId();         // I fitch the Id but not from database It comes from Login by Identity FrameWroke
+            var user = db.Users.Find(userId);               //we use this Id to fitch user object from dbase  We do not use SingelOrdDefault because we do not need including nested tables or we do not have loop list
+                                                            //we have old info object from db and new info to replace it instead of old one 
+            user.FirstName = inUser.FirstName;              //we transfer the changes info from IndexViewModel class by inUser to database by ApplicationUser class and 
+            user.LastName = inUser.LastName; 
             user.Age = inUser.Age;
             user.PhoneNumber = inUser.Phone;
 
             db.SaveChanges();
-
-            return RedirectToAction("Index"); // to 
+            //we have to return not by Return view(); but by  ' return RedirectToAction("Index"); '
+            return RedirectToAction("Index"); 
         }
         //
         // POST: /Manage/RemoveLogin
