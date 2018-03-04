@@ -10,6 +10,7 @@ using SalehIdentityWebShop.Models;
 
 namespace SalehIdentityWebShop.Controllers
 {
+   [AllowAnonymous]
     public class CartItemsController : Controller
     {
         private WebShopDbContext db = new WebShopDbContext();

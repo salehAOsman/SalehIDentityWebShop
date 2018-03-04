@@ -10,16 +10,16 @@ using SalehIdentityWebShop.Models;
 
 namespace SalehIdentityWebShop.Controllers
 {
+    [AllowAnonymous]
     public class ProductsController : Controller
     {
         private WebShopDbContext db = new WebShopDbContext();
-
         // GET: Products
         public ActionResult Index()
         {
             return View(db.Products.ToList());
         }
-
+ 
         // GET: Products/Details/5
         public ActionResult Details(int? id)
         {

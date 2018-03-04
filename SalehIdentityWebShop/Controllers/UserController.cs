@@ -11,11 +11,12 @@ using Microsoft.AspNet.Identity;
 
 namespace SalehIdentityWebShop.Controllers
 {
+
+    [Authorize]
     public class UserController : Controller
     {
         //this name of lcass that include the line and name of connectionString in IdentityModels.cs
         private WebShopDbContext db = new WebShopDbContext();//get Users, Roles
-
 
         // GET: UserManager
         public ActionResult Index(string orderBy)
@@ -46,7 +47,6 @@ namespace SalehIdentityWebShop.Controllers
             }
             return View(myUser);
         }
-        
 
         // GET: User/Details/5
         public ActionResult Details(string id)
@@ -152,6 +152,7 @@ namespace SalehIdentityWebShop.Controllers
             
 
             return View();
-        } 
+        }
+
     }
 }

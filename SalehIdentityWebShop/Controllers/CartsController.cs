@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace SalehIdentityWebShop.Controllers
 {
+    [Authorize]
     public class CartsController : Controller
     {
         private WebShopDbContext db = new WebShopDbContext();
@@ -134,9 +135,7 @@ namespace SalehIdentityWebShop.Controllers
             {
                 user.Cart = new Cart();
             }
-
             bool notFound = true;                                                    //we will check if he has already product inside the cart or not
-
             foreach (var item in user.Cart.CartItems)                                //we will check in cart by loop 
             {
                 if (item.Products.Id== pId)                                                   //product id
@@ -173,6 +172,7 @@ namespace SalehIdentityWebShop.Controllers
                 return RedirectToAction("Index","Products");
             }
              return RedirectToAction("Details", new { id = user.Cart.Id });
+            //we do not use Return View() because we will go to call method 
         }
     }
 }

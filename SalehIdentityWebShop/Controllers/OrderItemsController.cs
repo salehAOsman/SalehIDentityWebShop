@@ -10,8 +10,10 @@ using SalehIdentityWebShop.Models;
 
 namespace SalehIdentityWebShop.Controllers
 {
+    [Authorize]
     public class OrderItemsController : Controller
     {
+
         private WebShopDbContext db = new WebShopDbContext();
 
         // GET: OrderItems

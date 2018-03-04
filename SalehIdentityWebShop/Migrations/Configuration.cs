@@ -38,11 +38,13 @@ namespace SalehIdentityWebShop.Migrations
 
             var userStore = new UserStore<ApplicationUser>(db);                 //what does it means ???
             var userManager = new UserManager<ApplicationUser>(userStore);
+            
             //now we create a roles not users 
             if (roleManager.FindByName("Guru") == null)// check if it is first time then create new user
             {
-                roleManager.Create(new IdentityRole("Guru"));// my role for adminstration
+                roleManager.Create(new IdentityRole("Guru"));// my role for administration
             }
+
             if (roleManager.FindByName("Common") == null)
             {
                 roleManager.Create(new IdentityRole("Common"));// my role for a normal User

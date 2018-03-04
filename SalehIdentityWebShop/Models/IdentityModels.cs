@@ -9,11 +9,10 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace SalehIdentityWebShop.Models
 {
-    // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
+    //You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
-        /*in IdentityUser we do not have first and last name 
-         * 'and address  but we have PhoneNymber then we add just those we do not have it*/
+        /*In IdentityUser we do not have First and last name 'and address but we have PhoneNymber then we add just those we do not have it */
 
         [Range(minimum: 0, maximum: 150)]
         public int Age { get; set; }
@@ -34,7 +33,6 @@ namespace SalehIdentityWebShop.Models
 
         public List<Order> Orders { get; set; }//
         public Cart Cart { get; set; }
-
 
         public ApplicationUser(int age, string firstName, string lastName, string address)
         {

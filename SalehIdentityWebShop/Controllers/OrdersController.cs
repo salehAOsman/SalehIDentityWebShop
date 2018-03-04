@@ -17,6 +17,7 @@ namespace SalehIdentityWebShop.Controllers
         private WebShopDbContext db = new WebShopDbContext();
 
         // GET: Orders
+        
         public ActionResult Index()
         {
             return View(db.Orders.ToList());
@@ -34,7 +35,6 @@ namespace SalehIdentityWebShop.Controllers
             {
                 return HttpNotFound();
             }
-            
             return View(order);
         }
 
@@ -107,11 +107,10 @@ namespace SalehIdentityWebShop.Controllers
         //        db.SaveChanges();
         //        return RedirectToAction("Index");
         //    }
-
         //    return View(order);
         //}
-
         // GET: Orders/Edit/5
+    
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -176,5 +175,6 @@ namespace SalehIdentityWebShop.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }

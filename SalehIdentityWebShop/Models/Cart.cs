@@ -17,6 +17,7 @@ namespace SalehIdentityWebShop.Models
             CartItems = new List<CartItem>(); //to put this Products inside it as list of products
         }
 
+
         //public List<Product> Products { get; set; }
         //[ForeignKey("UserApp")]
         //public string UserAppId { get; set; }//we will fitch id of user here 

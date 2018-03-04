@@ -10,7 +10,6 @@ using System.Web.Mvc;
 
 namespace SalehIdentityWebShop.Controllers
 {
-
     public class RoleController : Controller
     {
         //after we create new controller here jump to AcountController to copy/paste few methods : and pasted here  
@@ -98,6 +97,7 @@ namespace SalehIdentityWebShop.Controllers
 
             return View(new RoleViewModel(role));
         }
+
         public async Task<ActionResult> RoleNameDetails(string name)
         {
             var role = await RoleManager.FindByNameAsync(name);
@@ -128,4 +128,3 @@ namespace SalehIdentityWebShop.Controllers
  * will gor to Create View and hide id in Create View Role then run then we  start to follow next link 
  * https://www.youtube.com/watch?v=K3hmX6vXeCk&list=PL-EU0JUF-XD2BpvdS_ognd6PiSoFX4k5_&index=12 to
  * add user and assing role to users we jump to  AcountController.cs  line 20*/
-

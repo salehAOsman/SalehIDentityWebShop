@@ -20,7 +20,6 @@ namespace SalehIdentityWebShop.Controllers
         //we add db to ritch database
         WebShopDbContext db = new WebShopDbContext();
 
-
         public ManageController()
         {
         }
@@ -383,6 +382,7 @@ namespace SalehIdentityWebShop.Controllers
         }
 
 #region Helpers
+
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 

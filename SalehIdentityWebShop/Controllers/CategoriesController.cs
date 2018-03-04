@@ -11,8 +11,11 @@ using SalehIdentityWebShop.Models;
 
 namespace SalehIdentityWebShop.Controllers
 {
+
+    [Authorize]
     public class CategoriesController : Controller
     {
+
         private WebShopDbContext db = new WebShopDbContext();
 
         // GET: Categories
@@ -55,7 +58,6 @@ namespace SalehIdentityWebShop.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-
             return View(category);
         }
 

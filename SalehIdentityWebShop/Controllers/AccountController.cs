@@ -13,7 +13,6 @@ using SalehIdentityWebShop.Models;
 
 namespace SalehIdentityWebShop.Controllers
 {
-    [Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
